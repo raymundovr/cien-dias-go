@@ -3,14 +3,21 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func main() {
-	for i := 1; i < len(os.Args); i++ {
-		fmt.Println(os.Args[i]);
-	}
+	args := os.Args[1:]
+	var sum int
 
-	for i, arg := range os.Args {
-		fmt.Println(i, arg);
+	for _, a := range args {
+		val, err := strconv.Atoi(a)
+		if err == nil {
+			sum += val
+		} else {
+			fmt.Println(a, " is not a valid int")
+		}
 	}
+	
+	fmt.Println("Sum is ", sum)
 }
