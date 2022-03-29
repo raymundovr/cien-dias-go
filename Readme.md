@@ -31,3 +31,8 @@ Para hacer un join the strings se puede usar el paquete `strings`
 ```go
 strings.Join(os.Args[1:], " ")
 ```
+
+El estilo recomendado para nombrar en Go es usar `camelCase` para los identificadores, excepto los que son de acceso público, que utilizan `PascalCase`.
+
+
+Se pueden declarar constantes usando `const`.
