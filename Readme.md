@@ -36,3 +36,24 @@ El estilo recomendado para nombrar en Go es usar `camelCase` para los identifica
 
 
 Se pueden declarar constantes usando `const`.
+
+## Tres
+
+El paquete `io/ioutil` soporta carga de archivos
+
+```go
+import "io/ioutil"
+
+func main() {
+    ...
+    data, err := ioutil.ReadFile(path)
+}
+```
+
+`data` es un arreglo de `byte`, para convertirlo en `string`
+
+```go
+...
+dataString := string(data)
+...
+```
