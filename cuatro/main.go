@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"image"
-	"os"
-	_ "image/png"
 	_ "image/jpeg"
+	_ "image/png"
+	"os"
 )
 
 func main() {
@@ -33,5 +33,8 @@ func main() {
 
 	fmt.Println("Got format", imgFormat)
 
-	fmt.Println("Image", img.Bounds())
+	blueImg := blue(img)
+	
+	saveImage("blue_filter." + imgFormat, blueImg, imgFormat)
+	
 }

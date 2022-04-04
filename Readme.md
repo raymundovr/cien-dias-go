@@ -104,3 +104,29 @@ if err != nil {
 	
 defer reader.Close()
 ```
+
+Para separar funcionalidades en diferentes archivos dentro del mismo paquete sólo hace falta declarar el mismo en los diferentes archivos
+```go
+
+// main.go
+package main
+...
+
+
+// filters.go
+package main
+```
+
+El paquete `image` tiene colores en el rango [0, 65535]. La explicación está [en el blog del paquete](https://go.dev/blog/image). Para usarlo es necesario convertilo a `uint8` ejemplo `ru8 := uint8(r / 0x101)`.
+
+Para escribir una imagen a archivo es necesario utilizar un descriptor y un codificador dependiendo del tipo de imagen
+
+```go
+    if imgFormat == "png" {
+		saveErr := png.Encode(writer, img)
+		if saveErr != nil {
+			writer.Close()
+			return false;
+		}
+	}
+```
