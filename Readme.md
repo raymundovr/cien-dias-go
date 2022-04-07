@@ -130,3 +130,67 @@ Para escribir una imagen a archivo es necesario utilizar un descriptor y un codi
 		}
 	}
 ```
+
+## Cinco
+
+Declaraciones de estructuras son
+```go
+type nombre struct {
+    ...
+}
+```
+
+Los campos van dentro de la declaración indicando su tipo de datos
+```go
+type person struct {
+    ID string
+}
+```
+
+Las estructuras soportan anotaciones para los campos usando \`\`, por ejemplo para convertir a un campo JSON
+```go
+type person struct {
+    ID string `json:"id"` 
+}
+```
+
+Declarar variables con una estructura como tipo se da de la forma
+```go
+var onePerson = person{ ID: "1" }
+
+var persons = person[]{
+    {ID: "1"},
+    {ID: "2"},
+}
+```
+
+El paquete [gin](https://gin-gonic.com) es un web framework. Opcionalmente se necesita el paquete `net/http` para ciertas constantes estándares en HTTP.
+```go
+import (
+	"net/http"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+    router := gin.Default()
+    router.Run("localhost:8080")
+}
+```
+
+"""
+gin.Context is the most important part of Gin. It carries request details, validates and serializes JSON, and more. (Despite the similar name, this is different from Go’s built-in context package.)
+"""
+
+Las funciones que realizan acciones reciben un apuntador a `gin.Context`.
+
+```go
+func getAlbums(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, albums)
+}
+
+func main() {
+	router := gin.Default()
+	router.GET("/albums", getAlbums)
+	router.Run("localhost:8080")
+}
+```
