@@ -194,3 +194,37 @@ func main() {
 	router.Run("localhost:8080")
 }
 ```
+
+Gin también puede transformar los datos enviados en una nueva entidad a partir de la struct.
+
+Para esto usa `c.BindJSON()`
+```go
+func postAlbum(c *gin.Context) {
+	var newAlbum album
+	if err := c.BindJSON(&newAlbum); err != nil {
+		return ;
+	}
+
+	albums = append(albums, newAlbum)
+	c.IndentedJSON(http.StatusCreated, newAlbum)
+}
+```
+
+Se observa que cuando se envían datos vacíos la entidad se crea con datos por default.
+```json
+...
+  {
+    "id": "",
+    "title": "",
+    "artist": "",
+    "price": 0
+  }
+...
+```
+
+También que `gin` envía automáticamente un error 400 si falla el parse y no se manipula la respuesta del servidor.
+
+Una respuesta puede enviar un objeto a partir de la struct `H` de `gin`.
+```go
+c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+```
