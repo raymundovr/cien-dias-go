@@ -228,3 +228,15 @@ Una respuesta puede enviar un objeto a partir de la struct `H` de `gin`.
 ```go
 c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 ```
+
+Remover un elemento en un slice se realiza mendiante la composición de los elementos excluyentes
+
+```go
+    for i, album := range albums {
+		if album.ID == id {
+			albums = append(albums[:i], albums[i+1:]...)
+			c.Status(200)
+			return
+		}
+	}
+```
