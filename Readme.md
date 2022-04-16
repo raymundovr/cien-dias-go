@@ -240,3 +240,9 @@ Remover un elemento en un slice se realiza mendiante la composición de los elem
 		}
 	}
 ```
+
+## Seis
+
+Siguiendo https://www.mongodb.com/languages/golang y https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
+
+
