@@ -246,3 +246,25 @@ Remover un elemento en un slice se realiza mendiante la composición de los elem
 Siguiendo https://www.mongodb.com/languages/golang y https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
 
 
+## Siete
+
+Declarar constantes que asemejan a `enum`s
+```go
+type EventType string
+
+const (
+	one		EventType = "one"
+	two				  = "two"		
+	three			  = "three"
+)
+
+type EventTypeNumber uint8
+
+const (
+	oneNumber	EventTypeNumber = iota
+	twoNumber
+	threeNumber
+)
+
+```
+`iota` genera autonumeración comenzando en cero.
