@@ -268,3 +268,9 @@ const (
 
 ```
 `iota` genera autonumeración comenzando en cero.
+
+## Ocho
+
+Si los archivos .go de una carpeta no corresponden todos al mismo `package` hay errores.
+
+Para organizarlo se pueden crear subcarpetas, cada una con archivos que declaran un `package` diferente.
