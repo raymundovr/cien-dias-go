@@ -274,3 +274,5 @@ const (
 Si los archivos .go de una carpeta no corresponden todos al mismo `package` hay errores.
 
 Para organizarlo se pueden crear subcarpetas, cada una con archivos que declaran un `package` diferente.
+
+Si no hay un `package main` no se puede ejecutar usando `go run .`. Esto significa que paquetes diferentes a main sólo pueden ser librerías.
