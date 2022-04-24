@@ -1,7 +1,9 @@
 package conversions
 
-type Farenheit float32
-type Celsius float32
+import "fmt"
+
+type Farenheit float64
+type Celsius float64
 
 const (
 	Freezing Celsius = 0
@@ -15,4 +17,12 @@ func IntoFarenheit(c Celsius) Farenheit {
 
 func IntoCelsius(f Farenheit) Celsius {
 	return Celsius( (f - 32) / 1.8000 )
+}
+
+func (c Celsius) String() string {
+	return fmt.Sprintf("%.2f °C", c)
+}
+
+func (c Farenheit) String() string {
+	return fmt.Sprintf("%.2f °F", c)
 }

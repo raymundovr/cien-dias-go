@@ -276,3 +276,15 @@ Si los archivos .go de una carpeta no corresponden todos al mismo `package` hay 
 Para organizarlo se pueden crear subcarpetas, cada una con archivos que declaran un `package` diferente.
 
 Si no hay un `package main` no se puede ejecutar usando `go run .`. Esto significa que paquetes diferentes a main sólo pueden ser librerías.
+
+Es posible sobrecargar la representación de un tipo mediante una función, por ejemplo aquí se hace con `string`
+```go
+
+func (f Farenheit) String() string {
+	return fmt.Sprintf("%.2f °F", f)
+}
+
+func (c Celsius) String() string {
+	return fmt.Sprintf("%.2f °C", c)
+}
+```
