@@ -288,3 +288,21 @@ func (c Celsius) String() string {
 	return fmt.Sprintf("%.2f °C", c)
 }
 ```
+
+De la misma manera
+```go
+func (f Farenheit) IntoCelsius() Celsius {
+	return Celsius( (f - 32) / 1.8000 )
+}
+
+func (k Kelvin) IntoCelsius() Celsius {
+	return Celsius(k - 273.15)
+}
+```
+
+Para usar la sobrecarga
+```go
+temp := Celsius(37)
+conv := temp.IntoFarenheit()
+convStr = conv.String()
+```
