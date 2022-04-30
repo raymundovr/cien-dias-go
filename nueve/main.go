@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println("**Conversions**")
+	fmt.Println("**Conversiones**")
 	bodyTemperature := conversions.Celsius(37)
 
 	fmt.Println("La temperatura corporal promedio es", bodyTemperature)

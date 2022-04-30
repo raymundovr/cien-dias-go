@@ -46,6 +46,14 @@ func (c Celsius) CalculateEquivalents() Equivalents {
 	return Equivalents{ f: c.IntoFarenheit(), c: c, k: c.IntoKelvin() }
 }
 
+func (k Kelvin) CalculateEquivalents() Equivalents {
+	return Equivalents{ f: k.IntoFarenheit(), c: k.IntoCelsius(), k: k }
+}
+
+func (f Farenheit) CalculateEquivalents() Equivalents {
+	return Equivalents{ f: f, c: f.IntoCelsius(), k: f.IntoKelvin() }
+}
+
 func (c Celsius) String() string {
 	return fmt.Sprintf("%.2f °C", c)
 }
@@ -59,5 +67,5 @@ func (k Kelvin) String() string {
 }
 
 func (e Equivalents) String() string {
-	return fmt.Sprintf("These are equivalents => %s - %s - %s", e.c, e.f, e.k)
+	return fmt.Sprintf("Estas unidades son equivalentes => %s - %s - %s", e.c, e.f, e.k)
 }
