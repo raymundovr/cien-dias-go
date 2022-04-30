@@ -19,7 +19,7 @@ const (
 )
 
 func (c Celsius) IntoFarenheit() Farenheit {
-	return Farenheit( c * 1.8000 + 32 )
+	return Farenheit( c * 1.8 + 32 )
 }
 
 func (k Kelvin) IntoFarenheit() Farenheit {
@@ -27,7 +27,7 @@ func (k Kelvin) IntoFarenheit() Farenheit {
 }
 
 func (f Farenheit) IntoCelsius() Celsius {
-	return Celsius( (f - 32) / 1.8000 )
+	return Celsius( (f - 32) / 1.8 )
 }
 
 func (k Kelvin) IntoCelsius() Celsius {

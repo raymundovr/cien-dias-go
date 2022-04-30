@@ -7,11 +7,11 @@ import (
 
 func main() {
 	fmt.Println("**Conversions**")
-	c := conversions.Celsius(37)
+	bodyTemperature := conversions.Celsius(37)
 
-	fmt.Println(c)
+	fmt.Println("La temperatura corporal promedio es", bodyTemperature)
 
-	equiv := c.CalculateEquivalents()
+	equiv := bodyTemperature.CalculateEquivalents()
 
 	fmt.Println(equiv)
 }
