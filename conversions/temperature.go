@@ -6,6 +6,12 @@ type Farenheit float64
 type Celsius float64
 type Kelvin float64
 
+type Equivalents struct {
+	f Farenheit
+	c Celsius
+	k Kelvin
+}
+
 const (
 	Freezing Celsius = 0
 	Boiling Celsius = 100
@@ -36,6 +42,10 @@ func (f Farenheit) IntoKelvin() Kelvin {
 	return f.IntoCelsius().IntoKelvin()
 }
 
+func (c Celsius) CalculateEquivalents() Equivalents {
+	return Equivalents{ f: c.IntoFarenheit(), c: c, k: c.IntoKelvin() }
+}
+
 func (c Celsius) String() string {
 	return fmt.Sprintf("%.2f °C", c)
 }
@@ -46,4 +56,8 @@ func (c Farenheit) String() string {
 
 func (k Kelvin) String() string {
 	return fmt.Sprintf("%.2f °K", k)
+}
+
+func (e Equivalents) String() string {
+	return fmt.Sprintf("These are equivalents: %s - %s - %s", e.c, e.f, e.k)
 }
