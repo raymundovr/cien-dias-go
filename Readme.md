@@ -1,135 +1,92 @@
 # Cien días de código en Golang
 # 💯🐭
 
-Los nombres de los proyectos no reflejan los días. Sólo siguen su propia secuencia.
+Los nombres de los proyectos no reflejan los días. Sólo siguen su propia secuencia. Están ordenados de más reciente a más antiguo.
 
-# Uno
-El paquete `os` tiene un `slice`, `Args`, que almacena los argumentos con que el programa fue invocado
+## Nueve
+Go no tiene en estos momentos un buen soporte de genéricos. Por ejemplo no es posible definir una estructura que tenga un valor genérico que permita hacer comparaciones con todos los operadores: ==, !=, <, > <=, >=.
+
+La interfaz `comparable` sólo opera con == y !=.
+
+Para poder crear una estructura que pueda soportar un valor con múltiples tipos se puede declarar una interfaz.
 ```go
-import (
-    "fmt"
-    "os"
+type Valuable interface {
+	int | float64 | string
+}
+```
+Posteriormente se usa dicha interfaz para declarar una `struct` usando la misma sintaxis como en `generic`.
+```go
+type BinaryTree[T Valuable] struct {
+	value		T
+	left,right	*BinaryTree[T]
+}
+```
+
+
+## Ocho
+
+Si los archivos .go de una carpeta no corresponden todos al mismo `package` hay errores.
+
+Para organizarlo se pueden crear subcarpetas, cada una con archivos que declaran un `package` diferente.
+
+Si no hay un `package main` no se puede ejecutar usando `go run .`. Esto significa que paquetes diferentes a main sólo pueden ser librerías.
+
+Es posible sobrecargar la representación de un tipo mediante una función, por ejemplo aquí se hace con `string`
+```go
+
+func (f Farenheit) String() string {
+	return fmt.Sprintf("%.2f °F", f)
+}
+
+func (c Celsius) String() string {
+	return fmt.Sprintf("%.2f °C", c)
+}
+```
+
+De la misma manera
+```go
+func (f Farenheit) IntoCelsius() Celsius {
+	return Celsius( (f - 32) / 1.8000 )
+}
+
+func (k Kelvin) IntoCelsius() Celsius {
+	return Celsius(k - 273.15)
+}
+```
+
+Para usar la sobrecarga
+```go
+temp := Celsius(37)
+conv := temp.IntoFarenheit()
+convStr = conv.String()
+```
+## Siete
+
+Declarar constantes que asemejan a `enum`s
+```go
+type EventType string
+
+const (
+	one		EventType = "one"
+	two				  = "two"		
+	three			  = "three"
 )
-...
 
-for index, arg := range os.Args {
-    fmt.Println(index, arg);
-}
-```
+type EventTypeNumber uint8
 
-El paquete `strconv` contiene funciones para hacer conversiones de strings
-```go
-// val == 0, err != nil
-val, err := strconv.Atoi("x")
-
-
-// val == 10, err == nil
-val, err := strconv.Atoi("10")
-```
-
-Para hacer un join the strings se puede usar el paquete `strings`
-```go
-strings.Join(os.Args[1:], " ")
-```
-
-El estilo recomendado para nombrar en Go es usar `camelCase` para los identificadores, excepto los que son de acceso público, que utilizan `PascalCase`.
-
-
-Se pueden declarar constantes usando `const`. Sólo pueden ser `number`, `string` o `boolean`
-
-## Tres
-
-El paquete `io/ioutil` soporta carga de archivos
-
-```go
-import "io/ioutil"
-
-func main() {
-    ...
-    data, err := ioutil.ReadFile(path)
-}
-```
-
-`data` es un arreglo de `byte`, para convertirlo en `string`
-
-```go
-...
-dataString := string(data)
-...
-```
-
-## Cuatro
-Go tiene manipulación de imágenes en la librería estandar mediante el paquete [img](https://pkg.go.dev/image).
-```go
-import "img"
-```
-
-Para abrir una imágen es necesario primero crear un `io.Reader`
-```go
-reader, err := os.Open(filePath)
-img, s, err := image.Decode(reader)
-```
-En este caso `s` es el formato de la imagen (png, jpeg, gif), `img` contiene una estructura con referencia a la imagen.
-
-Es posible cargar una librería sólo por sus efectos secundarios mediante `import _`, ejemplos:
-
-```go
-import _ "image/png"
-import _ "image/jpeg"
-
-// juntos
-
-import (
-    _ "image/png"
-    _ "image/jpeg"
+const (
+	oneNumber	EventTypeNumber = iota
+	twoNumber
+	threeNumber
 )
+
 ```
+`iota` genera autonumeración comenzando en cero.
 
-En este caso después de importar es posible operar con imágenes png y jpeg.
+## Seis
 
-El paquete `os` también permite leer archivos, aunque en este caso retorna un `reader`
-```go
-err, reader := os.Open(filePath)
-```
+Siguiendo https://www.mongodb.com/languages/golang y https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
 
-Usar `defer` permite detener la ejecución de una función hasta que todas las llamadas o manipulaciones bajo ella hayan sido completadas
-
-```go
-
-reader, err := os.Open(filePath)
-if err != nil {
-	fmt.Printf("Error reading file %s: %v", filePath, err)
-	os.Exit(1)
-}
-	
-defer reader.Close()
-```
-
-Para separar funcionalidades en diferentes archivos dentro del mismo paquete sólo hace falta declarar el mismo en los diferentes archivos
-```go
-
-// main.go
-package main
-...
-
-
-// filters.go
-package main
-```
-
-El paquete `image` tiene colores en el rango [0, 65535]. La explicación está [en el blog del paquete](https://go.dev/blog/image). Para usarlo es necesario convertilo a `uint8` ejemplo `ru8 := uint8(r / 0x101)`.
-
-Para escribir una imagen a archivo es necesario utilizar un descriptor y un codificador dependiendo del tipo de imagen
-
-```go
-    if imgFormat == "png" {
-		saveErr := png.Encode(writer, img)
-		if saveErr != nil {
-			writer.Close()
-			return false;
-		}
-	}
-```
 
 ## Cinco
 
@@ -241,68 +198,130 @@ Remover un elemento en un slice se realiza mendiante la composición de los elem
 	}
 ```
 
-## Seis
-
-Siguiendo https://www.mongodb.com/languages/golang y https://www.mongodb.com/blog/post/quick-start-golang--mongodb--modeling-documents-with-go-data-structures
-
-
-## Siete
-
-Declarar constantes que asemejan a `enum`s
+## Cuatro
+Go tiene manipulación de imágenes en la librería estandar mediante el paquete [img](https://pkg.go.dev/image).
 ```go
-type EventType string
+import "img"
+```
 
-const (
-	one		EventType = "one"
-	two				  = "two"		
-	three			  = "three"
+Para abrir una imágen es necesario primero crear un `io.Reader`
+```go
+reader, err := os.Open(filePath)
+img, s, err := image.Decode(reader)
+```
+En este caso `s` es el formato de la imagen (png, jpeg, gif), `img` contiene una estructura con referencia a la imagen.
+
+Es posible cargar una librería sólo por sus efectos secundarios mediante `import _`, ejemplos:
+
+```go
+import _ "image/png"
+import _ "image/jpeg"
+
+// juntos
+
+import (
+    _ "image/png"
+    _ "image/jpeg"
 )
+```
 
-type EventTypeNumber uint8
+En este caso después de importar es posible operar con imágenes png y jpeg.
 
-const (
-	oneNumber	EventTypeNumber = iota
-	twoNumber
-	threeNumber
+El paquete `os` también permite leer archivos, aunque en este caso retorna un `reader`
+```go
+err, reader := os.Open(filePath)
+```
+
+Usar `defer` permite detener la ejecución de una función hasta que todas las llamadas o manipulaciones bajo ella hayan sido completadas
+
+```go
+
+reader, err := os.Open(filePath)
+if err != nil {
+	fmt.Printf("Error reading file %s: %v", filePath, err)
+	os.Exit(1)
+}
+	
+defer reader.Close()
+```
+
+Para separar funcionalidades en diferentes archivos dentro del mismo paquete sólo hace falta declarar el mismo en los diferentes archivos
+```go
+
+// main.go
+package main
+...
+
+
+// filters.go
+package main
+```
+
+El paquete `image` tiene colores en el rango [0, 65535]. La explicación está [en el blog del paquete](https://go.dev/blog/image). Para usarlo es necesario convertilo a `uint8` ejemplo `ru8 := uint8(r / 0x101)`.
+
+Para escribir una imagen a archivo es necesario utilizar un descriptor y un codificador dependiendo del tipo de imagen
+
+```go
+    if imgFormat == "png" {
+		saveErr := png.Encode(writer, img)
+		if saveErr != nil {
+			writer.Close()
+			return false;
+		}
+	}
+```
+
+## Tres
+
+El paquete `io/ioutil` soporta carga de archivos
+
+```go
+import "io/ioutil"
+
+func main() {
+    ...
+    data, err := ioutil.ReadFile(path)
+}
+```
+
+`data` es un arreglo de `byte`, para convertirlo en `string`
+
+```go
+...
+dataString := string(data)
+...
+```
+# Uno
+El paquete `os` tiene un `slice`, `Args`, que almacena los argumentos con que el programa fue invocado
+```go
+import (
+    "fmt"
+    "os"
 )
+...
 
+for index, arg := range os.Args {
+    fmt.Println(index, arg);
+}
 ```
-`iota` genera autonumeración comenzando en cero.
 
-## Ocho
-
-Si los archivos .go de una carpeta no corresponden todos al mismo `package` hay errores.
-
-Para organizarlo se pueden crear subcarpetas, cada una con archivos que declaran un `package` diferente.
-
-Si no hay un `package main` no se puede ejecutar usando `go run .`. Esto significa que paquetes diferentes a main sólo pueden ser librerías.
-
-Es posible sobrecargar la representación de un tipo mediante una función, por ejemplo aquí se hace con `string`
+El paquete `strconv` contiene funciones para hacer conversiones de strings
 ```go
+// val == 0, err != nil
+val, err := strconv.Atoi("x")
 
-func (f Farenheit) String() string {
-	return fmt.Sprintf("%.2f °F", f)
-}
 
-func (c Celsius) String() string {
-	return fmt.Sprintf("%.2f °C", c)
-}
+// val == 10, err == nil
+val, err := strconv.Atoi("10")
 ```
 
-De la misma manera
+Para hacer un join the strings se puede usar el paquete `strings`
 ```go
-func (f Farenheit) IntoCelsius() Celsius {
-	return Celsius( (f - 32) / 1.8000 )
-}
-
-func (k Kelvin) IntoCelsius() Celsius {
-	return Celsius(k - 273.15)
-}
+strings.Join(os.Args[1:], " ")
 ```
 
-Para usar la sobrecarga
-```go
-temp := Celsius(37)
-conv := temp.IntoFarenheit()
-convStr = conv.String()
-```
+El estilo recomendado para nombrar en Go es usar `camelCase` para los identificadores, excepto los que son de acceso público, que utilizan `PascalCase`.
+
+
+Se pueden declarar constantes usando `const`. Sólo pueden ser `number`, `string` o `boolean`
+
