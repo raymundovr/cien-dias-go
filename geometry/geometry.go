@@ -22,6 +22,14 @@ func (p Point) ScaleBy(factor float64) Point {
 	return Point{ X: p.X * factor, Y: p.Y * factor }
 }
 
+func Add(p Point, q Point) Point {
+	return Point{ p.X + q.X, p.Y + q.Y }
+}
+
+func Substract(p Point, q Point) Point {
+	return Point{ p.X - q.X, p.Y - q.Y }
+}
+
 func (c ColoredPoint) Distance(q ColoredPoint) float64 {
 	return c.Point.Distance(q.Point)
 }
