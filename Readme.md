@@ -3,6 +3,73 @@
 
 Los nombres de los proyectos no reflejan los días. Sólo siguen su propia secuencia. Están ordenados de más reciente a más antiguo.
 
+## Once
+Las `struct` pueden contener propiedades anónimas que agregan una composición de datos.
+```go
+type Point struct {
+	X, Y float64	
+}
+
+type ColoredPoint struct {
+	Point
+	color string
+}
+```
+
+Para construir estas estructuras se usan puros valores
+```go
+color := "red"
+c := geometry.ColoredPoint{ geometry.Point{1, 1}, color }
+```
+
+## Packages
+
+Alias para el paquete
+
+```go
+import (
+    "crypto/rand"
+    mrand "math/rand" // alternative name mrand avoids conflict
+)
+```
+
+Si no se usa el paquete que se importa Go marca un error. Para evitarlo se puede importar en "blanco"
+```go
+import _ "image/png" // register PNG decoder
+```
+
+Cada vez que se invoca un método de un tipo o estructura se realiza una copia de la información. Para evitarlo se puede pasar un apuntador
+```go
+func (p *Point) ScaleBy(factor float64) {
+    p.X *= factor
+    p.Y *= factor
+}
+```
+
+La convención es que si hay un método que recibe un apuntador entonces todos los métodos deben recibir un apuntador. Se invoca de la siguiente manera
+```go
+// La simple, haciendo uso de la transformación implícita del compilador
+p.ScaleBy(2) // funciona sólo para variables
+
+// OTRAS FORMAS
+
+r := &Point{1, 2}
+r.ScaleBy(2)
+fmt.Println(*r) // "{2, 4}"
+
+// --
+p := Point{1, 2}
+pptr := &p
+pptr.ScaleBy(2)
+fmt.Println(p) // "{2, 4}"
+
+// --
+p := Point{1, 2}
+(&p).ScaleBy(2)
+fmt.Println(p) // "{2, 4}"
+```
+
+
 ## Nueve
 Go no tiene en estos momentos un buen soporte de genéricos. Por ejemplo no es posible definir una estructura que tenga un valor genérico que permita hacer comparaciones con todos los operadores: ==, !=, <, > <=, >=.
 
