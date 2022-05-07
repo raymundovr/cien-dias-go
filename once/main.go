@@ -11,9 +11,8 @@ func main() {
 
 	fmt.Printf("Distance from P %s to Q %s is %.2f\n", p, q, p.Distance(q))
 	
-	color := "red"
-	c := geometry.ColoredPoint{ geometry.Point{1, 1}, color }
-	fmt.Println("Point C", c)
+	redPoint := geometry.ColoredPoint{ geometry.Point{1, 1}, "red" }
+	fmt.Println("Punto rojo", redPoint)
 
 	var bluePoint geometry.ColoredPoint
 	bluePoint.Color = "blue"
@@ -21,4 +20,7 @@ func main() {
 	bluePoint.Y = 1.23
 
 	fmt.Println("Punto azul", bluePoint)
+
+	dRedBlue := redPoint.Distance(bluePoint)
+	fmt.Println("Distancia de rojo a azul", dRedBlue)
 }
