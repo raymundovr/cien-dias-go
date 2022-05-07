@@ -13,6 +13,12 @@ func main() {
 	
 	color := "red"
 	c := geometry.ColoredPoint{ geometry.Point{1, 1}, color }
+	fmt.Println("Point C", c)
 
-	fmt.Printf("Point C %s", c)
+	var bluePoint geometry.ColoredPoint
+	bluePoint.Color = "blue"
+	bluePoint.X = 10
+	bluePoint.Y = 1.23
+
+	fmt.Println("Punto azul", bluePoint)
 }
