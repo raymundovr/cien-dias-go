@@ -3,6 +3,19 @@
 
 Los nombres de los proyectos no reflejan los días. Sólo siguen su propia secuencia. Están ordenados de más reciente a más antiguo.
 
+## Sorting
+
+Para ordernar tipos de datos hay que implementar la interfaz de sort.Sort() que consta de tres métodos
+
+```go
+Len() int
+
+Less(i, j int) bool
+
+Swap(i, j int)
+
+```
+
 ## Once
 Las `struct` pueden contener propiedades anónimas que agregan una composición de datos.
 ```go
